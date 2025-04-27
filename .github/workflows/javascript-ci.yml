@@ -2,9 +2,6 @@ name: CI
 on:
   workflow_dispatch:
   push:
-    branches: [ develop ]
-  pull_request:
-    branches: [ main, develop ]
 
 jobs:
   build:
@@ -25,6 +22,8 @@ jobs:
       run: npm run test
     - name: Build
       run: npm run build
-    - uses: codecov/codecov-action@v3
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v4
       with:
-        file: ./coverage/coverage-final.json
+        name: code-coverage-report
+        path: ./coverage
